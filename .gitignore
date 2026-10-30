@@ -1,0 +1,11 @@
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+coverage.*
+.env
+.DS_Store
+.idea/
+.vscode/
+.claude/settings.local.json
