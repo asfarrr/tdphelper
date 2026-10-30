@@ -10,12 +10,14 @@ import (
 	"strings"
 )
 
+// Config holds bot settings loaded from the environment.
 type Config struct {
 	BotToken string
 	LogLevel slog.Level
 	AdminIDs []int64
 }
 
+// Load reads and validates settings from environment variables.
 func Load() (Config, error) {
 	cfg := Config{BotToken: os.Getenv("BOT_TOKEN")}
 	if cfg.BotToken == "" {

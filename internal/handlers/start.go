@@ -10,6 +10,7 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
+// Start greets the user and points to the help command.
 func Start(ctx context.Context, s Sender, update *models.Update) {
 	msg := update.Message
 	name := "друг"
@@ -20,6 +21,7 @@ func Start(ctx context.Context, s Sender, update *models.Update) {
 		"Привет, <b>%s</b>! Набери /help, чтобы узнать, что я умею.", html.EscapeString(name)))
 }
 
+// Help lists the available commands.
 func Help(ctx context.Context, s Sender, update *models.Update) {
 	reply(ctx, s, update.Message.Chat.ID, "/start — начать\n/help — помощь")
 }

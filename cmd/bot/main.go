@@ -1,3 +1,4 @@
+// Command bot runs the tdphelper Telegram bot.
 package main
 
 import (
