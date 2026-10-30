@@ -23,6 +23,28 @@ func TestLoad(t *testing.T) {
 	}
 }
 
+func TestLoadDBPath(t *testing.T) {
+	t.Setenv("BOT_TOKEN", "token")
+
+	t.Setenv("DB_PATH", "")
+	cfg, err := Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.DBPath != "data/tdphelper.db" {
+		t.Errorf("default DBPath = %q", cfg.DBPath)
+	}
+
+	t.Setenv("DB_PATH", "/var/lib/bot.db")
+	cfg, err = Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.DBPath != "/var/lib/bot.db" {
+		t.Errorf("DBPath = %q", cfg.DBPath)
+	}
+}
+
 func TestLoadRequiresToken(t *testing.T) {
 	t.Setenv("BOT_TOKEN", "")
 	if _, err := Load(); err == nil {

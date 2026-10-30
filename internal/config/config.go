@@ -15,6 +15,7 @@ type Config struct {
 	BotToken string
 	LogLevel slog.Level
 	AdminIDs []int64
+	DBPath   string
 }
 
 // Load reads and validates settings from environment variables.
@@ -35,6 +36,11 @@ func Load() (Config, error) {
 		return Config{}, fmt.Errorf("ADMIN_IDS: %w", err)
 	}
 	cfg.AdminIDs = ids
+
+	cfg.DBPath = os.Getenv("DB_PATH")
+	if cfg.DBPath == "" {
+		cfg.DBPath = "data/tdphelper.db"
+	}
 
 	return cfg, nil
 }

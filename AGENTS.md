@@ -3,16 +3,19 @@
 ## Стек
 - Go 1.27, библиотека **github.com/go-telegram/bot** (handlers на `context`, без внешних зависимостей)
 - Конфиг — env-переменные (`internal/config`), логи — `log/slog`
+- База — SQLite через `modernc.org/sqlite` (без CGO), бэкап: `docs/BACKUP.md`
+- Деньги в копейках, вес в целых граммах, проценты в базисных пунктах. Никаких `float`
 - Тесты — стандартный `testing` (table-driven, фейки вместо моков), линт — `golangci-lint` (`.golangci.yml`)
 
 ## Структура
 ```
-cmd/bot/main.go       # точка входа: конфиг, логгер, bot.New, handlers.Register, b.Start
+cmd/bot/main.go       # точка входа: конфиг, логгер, база, bot.New, handlers.Register, b.Start
 internal/
-  config/             # Load() из env: BOT_TOKEN, LOG_LEVEL, ADMIN_IDS
+  config/             # Load() из env: BOT_TOKEN, LOG_LEVEL, ADMIN_IDS, DB_PATH
   handlers/           # хендлеры; Register() подключает всё к боту
   keyboards/          # фабрики клавиатур и кодирование callback data
-  service/            # бизнес-логика, не зависит от Telegram API
+  service/            # бизнес-логика и интерфейсы хранилищ, не зависит от Telegram API и SQL
+  storage/            # реализация хранилищ на SQLite, миграции в migrations/*.sql
   state/              # хранилище состояний многошаговых диалогов
 docs/plans/           # дизайн-доки и планы (superpowers: brainstorming / writing-plans)
 ```
